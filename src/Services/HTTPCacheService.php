@@ -33,6 +33,7 @@ class HTTPCacheService
             $response = $this->guzzle->get($url);
             $response = $response->getBody()->getContents();
             $response = json_decode($response,true);
+            var_dump($url);
             if(is_array($response)){
                 $result = $response;
                 $this->cache->set($key,json_encode($result));
