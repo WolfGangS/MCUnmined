@@ -8,10 +8,13 @@ class PlayerService
 {
     private $nbtService;
     private $_playerData;
+    private $http;
 
     public function __construct()
     {
         $this->nbtService = new Nbt\Service(new Nbt\DataHandler());
+        $this->http = new HTTPCacheService("https://sessionserver.mojang.com/session/minecraft/profile/",
+            new FileCacheService());
     }
 
     public function getPlayerProps(string $keys, string $props)
@@ -69,9 +72,41 @@ class PlayerService
             if ($file->getExtension() == "dat") {
                 $name = explode(".", $file->getFilename());
                 array_pop($name);
-                $players[strtolower(implode($name))] = $this->nbtService->loadFile($file->getRealPath())->__toArray();
+                $name = strtolower(implode($name));
+                $players[$name] = $this->nbtService->loadFile($file->getRealPath())->__toArray();
+                $players[$name]["Web"] = $this->getPlayerWebData($name);
             }
         }
         return $players;
+    }
+
+    private function getPlayerWebData($key)
+    {
+        $key = implode("", explode("-", $key));
+        $_data = $this->http->get($key);
+        $data["name"] = $_data["name"];
+        $props = $data["properties"] ?? [];
+
+        foreach ($props as $prop) {
+            $name = $prop["name"] ?? null;
+            $value = $prop["value"] ?? null;
+            if (!empty($name) && !empty($value)) {
+                $value = $this->getWebPropValue($name, $value);
+                if (!empty($value)) {
+                    $data[$name] = $value;
+                }
+            }
+        }
+
+        return $data;
+    }
+
+    private function getWebPropValue($name, $value)
+    {
+        switch ($name) {
+            case "textures":
+                return json_decode(base64_decode($value), true);
+        }
+        return null;
     }
 }
