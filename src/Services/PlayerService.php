@@ -23,7 +23,7 @@ class PlayerService
             $key = strtolower($key);
             foreach ($players as $id => $player) {
                 if ($id == $key || $key == "all") {
-                    $result[$key] = $this->getPropsFromArray($player, $props);
+                    $result[$id] = $this->getPropsFromArray($player, $props);
                 }
             }
         }
