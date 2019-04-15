@@ -21,7 +21,7 @@ class FileCacheService implements CacheInterface
 
     public function get(string $key)
     {
-        return $this->getCacheValue($key)["value"];
+        return $this->getCacheValue($key)[self::VALUE] ?? null;
     }
 
     private function getCacheValue(string $key)
@@ -32,7 +32,7 @@ class FileCacheService implements CacheInterface
     public function set(string $key, string $val, int $ttl = 0): bool
     {
         $this->getCache();
-        $this->_cache[$key]["value"] = $val;
+        $this->_cache[$key][self::VALUE] = $val;
         $this->_cache[$key][self::TTL] = $ttl === 0 ? 0 : time() + $ttl;
         $this->saveCache();
         return true;
@@ -45,13 +45,18 @@ class FileCacheService implements CacheInterface
             mkdir($dir);
         }
         $data = [];
-        $time = time();
         foreach ($this->getCache() as $key => $value) {
-            if ($value[self::TTL] > $time) {
+            if (!$this->valueExpired($value)) {
                 $data[$key] = $value;
             }
         }
         file_put_contents($this->file, json_encode($this->_cache, JSON_PRETTY_PRINT));
+    }
+
+    private function valueExpired($value)
+    {
+        $time = time();
+        return $value[self::TTL] < $time && $value[self::TTL] !== 0;
     }
 
     private function getCache()
@@ -60,9 +65,8 @@ class FileCacheService implements CacheInterface
             if (file_exists($this->file)) {
                 $cache = json_decode(file_get_contents($this->file), true);
                 if (is_array($cache)) {
-                    $time = time();
                     foreach ($cache as $key => $value) {
-                        if ($value[self::TTL] > $time) {
+                        if (!$this->valueExpired($value)) {
                             $this->_cache[$key] = $value;
                         }
                     }
