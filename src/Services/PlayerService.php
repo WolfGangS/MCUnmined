@@ -16,7 +16,15 @@ class PlayerService
 
     public function getPlayerProp(string $key, string $prop)
     {
-        return $this->getPlayerData($key)[$prop] ?? null;
+        $data = $this->getPlayerData($key);
+        if($key == "all"){
+            $props = [];
+            foreach ($data as $k=>$v){
+                $props[$k] = $v[$prop] ?? null;
+            }
+            return $props;
+        }
+        return $data[$prop] ?? null;
     }
 
     public function getPlayerData($key = null)
