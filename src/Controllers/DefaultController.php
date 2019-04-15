@@ -7,7 +7,8 @@ use Slim\Http\Response;
 
 class DefaultController
 {
-    public function pingRequest(Request $request, Response $response){
+    public function pingRequest(Request $request, Response $response)
+    {
         $response->getBody()->write("pong");
         return $response;
     }

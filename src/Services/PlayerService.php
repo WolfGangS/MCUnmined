@@ -14,12 +14,12 @@ class PlayerService
         $this->nbtService = new Nbt\Service(new Nbt\DataHandler());
     }
 
-    public function getPlayerData()
+    public function getPlayerData($key = null)
     {
         if (empty($this->_playerData)) {
             $this->_playerData = $this->fetchPlayerData();
         }
-        return $this->_playerData;
+        return $this->_playerData[$key] ?? $this->_playerData;
     }
 
     private function fetchPlayerData()

@@ -16,7 +16,13 @@ class PlayerController extends BaseController
         $this->service = new PlayerService();
     }
 
-    public function listRequest(Request $request, Response $response) {
-        return $this->success($this->service->getPlayerData(),$response);
+    public function listRequest(Request $request, Response $response)
+    {
+        return $this->success($this->service->getPlayerData(), $response);
+    }
+
+    public function getRequest(Request $request, Response $response, $args)
+    {
+        return $response->withJson($args);
     }
 }
