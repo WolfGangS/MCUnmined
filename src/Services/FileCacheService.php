@@ -29,8 +29,9 @@ class FileCacheService implements CacheInterface
     }
 
     private function saveCache(){
-        if(!file_exists(APP_ROOT . "/cache")){
-            mkdir(APP_ROOT . "/cache");
+        $dir = dirname($this->file);
+        if(!file_exists($dir)){
+            mkdir($dir);
         }
         file_put_contents($this->file, json_encode($this->_cache, JSON_PRETTY_PRINT));
     }
