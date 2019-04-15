@@ -37,6 +37,8 @@ class HTTPCacheService
                 $result = $response;
                 $this->cache->set($key,json_encode($result));
             }
+        } else {
+            $result = json_decode($result,true);
         }
         return $result;
     }
