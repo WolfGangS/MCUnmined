@@ -85,7 +85,7 @@ class PlayerService
         $key = implode("", explode("-", $key));
         $_data = $this->http->get($key);
         $data["name"] = $_data["name"];
-        $props = $data["properties"] ?? [];
+        $props = $_data["properties"] ?? [];
 
         foreach ($props as $prop) {
             $name = $prop["name"] ?? null;
