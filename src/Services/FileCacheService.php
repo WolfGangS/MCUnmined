@@ -24,16 +24,25 @@ class FileCacheService implements CacheInterface
     public function set(string $key, string $val, int $ttl = 0): bool
     {
         $this->_cache[$key] = $val;
-        file_put_contents($this->file, json_encode($this->_cache, JSON_PRETTY_PRINT));
+        $this->saveCache();
         return true;
+    }
+
+    private function saveCache(){
+        if(!file_exists(APP_ROOT . "/cache")){
+            mkdir(APP_ROOT . "/cache");
+        }
+        file_put_contents($this->file, json_encode($this->_cache, JSON_PRETTY_PRINT));
     }
 
     private function getCache()
     {
         if(empty($this->_cache)){
-            $cache = json_decode(file_get_contents($this->file),true);
-            if(is_array($cache)){
-                $this->_cache = $cache;
+            if(file_exists($this->file)) {
+                $cache = json_decode(file_get_contents($this->file), true);
+                if (is_array($cache)) {
+                    $this->_cache = $cache;
+                }
             }
         }
         return $this->_cache;
