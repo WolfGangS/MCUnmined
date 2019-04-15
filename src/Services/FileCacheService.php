@@ -11,12 +11,14 @@ class FileCacheService implements CacheInterface
 
     private $file = APP_ROOT . "/cache/filecache.json";
     private $_cache = [];
+    private $ttl = 0;
 
-    public function __construct($file = null)
+    public function __construct($file = null, $ttl = 0)
     {
         if (!empty($file)) {
             $this->file = $file;
         }
+        $this->ttl = $ttl;
     }
 
     public function get(string $key)
@@ -29,11 +31,11 @@ class FileCacheService implements CacheInterface
         return $this->getCache()[$key] ?? null;
     }
 
-    public function set(string $key, string $val, int $ttl = 0): bool
+    public function set(string $key, string $val): bool
     {
         $this->getCache();
         $this->_cache[$key][self::VALUE] = $val;
-        $this->_cache[$key][self::TTL] = $ttl === 0 ? 0 : time() + $ttl;
+        $this->_cache[$key][self::TTL] = $this->ttl === 0 ? 0 : time() + $this->ttl;
         $this->saveCache();
         return true;
     }
