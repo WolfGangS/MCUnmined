@@ -7,12 +7,12 @@ use Slim\Http\Response;
 
 abstract class BaseController
 {
-    private function responseWithJson(array $json, Response $response)
+    private function responseWithJson($json, Response $response)
     {
         return $response->withJson(array_filter($json));
     }
 
-    protected function success(array $data, Response $response)
+    protected function success($data, Response $response)
     {
         return $this->responseWithJson(
             [
@@ -22,7 +22,7 @@ abstract class BaseController
         );
     }
 
-    protected function failure(string $reason, Response $response, array $data = [])
+    protected function failure(string $reason, Response $response, $data = [])
     {
         return $this->responseWithJson(
             [
