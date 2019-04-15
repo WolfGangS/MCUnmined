@@ -4,9 +4,10 @@ namespace WLF_IO\MCUnmined\Controllers;
 
 use Slim\Http\Request;
 use Slim\Http\Response;
+use WLF_IO\MCUnmined\Controllers\Base\BaseController;
 use WLF_IO\MCUnmined\Services\PlayerService;
 
-class PlayerController
+class PlayerController extends BaseController
 {
     private $service;
 
@@ -16,7 +17,6 @@ class PlayerController
     }
 
     public function listRequest(Request $request, Response $response) {
-        $response->getBody()->write(json_encode($this->service->getPlayerData()));
-        return $response;
+        return $this->success($this->service->getPlayerData(),$response);
     }
 }
