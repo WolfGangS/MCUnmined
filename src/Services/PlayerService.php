@@ -14,7 +14,7 @@ class PlayerService
     {
         $this->nbtService = new Nbt\Service(new Nbt\DataHandler());
         $this->http = new HTTPCacheService("https://sessionserver.mojang.com/session/minecraft/profile/",
-            new FileCacheService(APP_ROOT . "/cache/playerHTTPCache.json"));
+            new FileCacheService(APP_ROOT . "/cache/playerHTTPCache.json",60*60*24));
     }
 
     public function getPlayerProps(string $keys, string $props)
