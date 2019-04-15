@@ -74,6 +74,7 @@ class PlayerService
                 array_pop($name);
                 $name = strtolower(implode($name));
                 $players[$name] = $this->nbtService->loadFile($file->getRealPath())->__toArray();
+                $players[$name]["hash"] = sha1(json_encode($players[$name]));
                 $players[$name]["Web"] = $this->getPlayerWebData($name);
             }
         }
