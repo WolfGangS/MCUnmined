@@ -14,17 +14,40 @@ class PlayerService
         $this->nbtService = new Nbt\Service(new Nbt\DataHandler());
     }
 
-    public function getPlayerProp(string $key, string $prop)
+    public function getPlayerProps(string $keys, string $props)
     {
-        $data = $this->getPlayerData($key);
-        if($key == "all"){
-            $props = [];
-            foreach ($data as $k=>$v){
-                $props[$k] = $v[$prop] ?? null;
+        $keys = explode(",", $keys);
+        $players = $this->getPlayerData();
+        $result = [];
+        foreach ($keys as $key) {
+            $key = strtolower($key);
+            foreach ($players as $id => $player) {
+                if ($id !== $key && $key !== "all") {
+                    $result[$key] = $this->getPropsFromArray($player, $props);
+                }
             }
-            return $props;
         }
-        return $data[$prop] ?? null;
+        if (count($result) == 1) {
+            $result = $result[$keys[0]];
+        }
+        return $result;
+    }
+
+    private function getPropsFromArray(array $data, string $keys)
+    {
+        $keys = strtolower($keys);
+        if ($keys === "all") {
+            return $data;
+        }
+        $keys = explode(",", $keys);
+        $result = [];
+        foreach ($keys as $key) {
+            $result[$key] = $data[$key] ?? null;
+        }
+        if (count($result) == 1) {
+            $result = $result[$keys[0]];
+        }
+        return $result;
     }
 
     public function getPlayerData($key = null)
@@ -47,7 +70,7 @@ class PlayerService
             if ($file->getExtension() == "dat") {
                 $name = explode(".", $file->getFilename());
                 array_pop($name);
-                $players[implode($name)] = $this->nbtService->loadFile($file->getRealPath())->__toArray();
+                $players[strtolower(implode($name))] = $this->nbtService->loadFile($file->getRealPath())->__toArray();
             }
         }
         return $players;
