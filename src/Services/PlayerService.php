@@ -33,7 +33,6 @@ class PlayerService
         if (count($result) == 1) {
             $result = $result[$keys[0]];
         }
-        die();
         return $result;
     }
 
