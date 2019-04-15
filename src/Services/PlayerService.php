@@ -89,6 +89,7 @@ class PlayerService
 
         foreach ($props as $prop) {
             $name = $prop["name"] ?? null;
+            echo "$key -- $name";
             $value = $prop["value"] ?? null;
             if (!empty($name) && !empty($value)) {
                 $value = $this->getWebPropValue($name, $value);
@@ -97,6 +98,7 @@ class PlayerService
                 }
             }
         }
+        die();
 
         return $data;
     }
