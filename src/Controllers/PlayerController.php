@@ -23,6 +23,6 @@ class PlayerController extends BaseController
 
     public function getRequest(Request $request, Response $response, $args)
     {
-        return $response->withJson($args);
+        return $this->success($this->service->getPlayerData(), $args["id"]);
     }
 }

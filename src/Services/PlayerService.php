@@ -32,7 +32,9 @@ class PlayerService
                 continue;
             }
             if($file->getExtension() == "dat"){
-                $players[$file->getFilename()] = $this->nbtService->loadFile($file->getRealPath());
+                $name = explode(".",$file->getFilename());
+                array_pop($name);
+                $players[implode($name)] = $this->nbtService->loadFile($file->getRealPath());
             }
         }
         return $players;
