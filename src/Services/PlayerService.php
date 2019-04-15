@@ -35,7 +35,6 @@ class PlayerService
 
     private function getPropsFromArray(array $data, string $keys)
     {
-        $keys = strtolower($keys);
         if ($keys === "all") {
             return $data;
         }
