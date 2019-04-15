@@ -25,4 +25,9 @@ class PlayerController extends BaseController
     {
         return $this->success($this->service->getPlayerData($args["id"]),$response);
     }
+
+    public function getPropRequest(Request $request, Response $response, $args)
+    {
+        return $this->success($this->service->getPlayerProp($args["id"],$args["prop"]),$response);
+    }
 }

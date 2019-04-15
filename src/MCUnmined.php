@@ -39,5 +39,6 @@ class MCUnmined
         $this->slim->get("/v1/ping", Controllers\DefaultController::class . ":pingRequest");
         $this->slim->get("/v1/players", Controllers\PlayerController::class . ":listRequest");
         $this->slim->get("/v1/players/{id}", Controllers\PlayerController::class . ":getRequest");
+        $this->slim->get("/v1/players/{id}/{prop}", Controllers\PlayerController::class . ":getPropRequest");
     }
 }

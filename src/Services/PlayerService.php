@@ -14,6 +14,11 @@ class PlayerService
         $this->nbtService = new Nbt\Service(new Nbt\DataHandler());
     }
 
+    public function getPlayerProp(string $key, string $prop)
+    {
+        return $this->getPlayerData($key)[$prop] ?? null;
+    }
+
     public function getPlayerData($key = null)
     {
         if (empty($this->_playerData)) {
@@ -28,13 +33,13 @@ class PlayerService
         $path = "/home/minecraft/1.14-pre-2/world/playerdata";
         $iterator = new \DirectoryIterator($path);
         foreach ($iterator as $file) {
-            if(!$file->isFile() || $file->isDot()){
+            if (!$file->isFile() || $file->isDot()) {
                 continue;
             }
-            if($file->getExtension() == "dat"){
-                $name = explode(".",$file->getFilename());
+            if ($file->getExtension() == "dat") {
+                $name = explode(".", $file->getFilename());
                 array_pop($name);
-                $players[implode($name)] = $this->nbtService->loadFile($file->getRealPath());
+                $players[implode($name)] = $this->nbtService->loadFile($file->getRealPath())->__toArray();
             }
         }
         return $players;
