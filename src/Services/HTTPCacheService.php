@@ -39,6 +39,7 @@ class HTTPCacheService
                 $this->cache->set($key,json_encode($result));
             }
         } else {
+            var_dump($url . "    CACHED");
             $result = json_decode($result,true);
         }
         return $result;
