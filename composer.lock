@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8b6a78629e1401385633287e844c16ec",
+    "content-hash": "a0a7ff78515273b93452a35aac3d24cd",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -493,16 +493,16 @@
         },
         {
             "name": "rickselby/nbt",
-            "version": "4.0.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/rickselby/NBT.git",
-                "reference": "c11ec81e984429d8fc7c32d3fd8de37ff4a4142f"
+                "url": "https://github.com/WolfGangS/NBT.git",
+                "reference": "4fe3f2a964d3968f8bb2c5767e4e1476b19dee27"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rickselby/NBT/zipball/c11ec81e984429d8fc7c32d3fd8de37ff4a4142f",
-                "reference": "c11ec81e984429d8fc7c32d3fd8de37ff4a4142f",
+                "url": "https://api.github.com/repos/WolfGangS/NBT/zipball/4fe3f2a964d3968f8bb2c5767e4e1476b19dee27",
+                "reference": "4fe3f2a964d3968f8bb2c5767e4e1476b19dee27",
                 "shasum": ""
             },
             "require": {
@@ -519,7 +519,6 @@
                     "Nbt\\Tests\\": "tests/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -556,7 +555,10 @@
                 "decode",
                 "encode"
             ],
-            "time": "2015-12-16T15:40:51+00:00"
+            "support": {
+                "source": "https://github.com/WolfGangS/NBT/tree/master"
+            },
+            "time": "2019-04-15T20:11:26+00:00"
         },
         {
             "name": "slim/slim",
@@ -633,7 +635,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "rickselby/nbt": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

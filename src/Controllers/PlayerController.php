@@ -16,8 +16,7 @@ class PlayerController
     }
 
     public function listRequest(Request $request, Response $response) {
-        $this->service->printTree();
-        $response->getBody()->write("PLAYERS");
+        $response->getBody()->write(json_encode($this->service->getPlayerData()));
         return $response;
     }
 }

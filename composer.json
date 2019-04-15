@@ -6,8 +6,14 @@
             "email": "wolfgang@wlf.io"
         }
     ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url":  "git@github.com:WolfGangS/NBT.git"
+        }
+    ],
     "require": {
-        "rickselby/nbt": "~4.0",
+        "rickselby/nbt": "dev-master",
         "slim/slim": "^3.2",
         "guzzlehttp/guzzle":"~6.0"
     },
