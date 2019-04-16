@@ -63,7 +63,7 @@ class PlayerService
     private function fetchPlayerData()
     {
         $players = [];
-        $path = "/home/minecraft/1.14-pre-2/world/playerdata";
+        $path = "/home/minecraft/1.14-pre-3/world/playerdata";
         $iterator = new \DirectoryIterator($path);
         foreach ($iterator as $file) {
             if (!$file->isFile() || $file->isDot()) {
